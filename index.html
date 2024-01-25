@@ -120,14 +120,41 @@
 
 <main class="about">
     <h2>About Lusso Makerspaces</h2>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor...</p>
+    <p>
+        Lusso Makerspaces is a creative hub where individuals can unleash their imagination and bring their ideas to life.
+        Our makerspace is equipped with cutting-edge tools and equipment for 3D printing, woodworking, and electronics.
+        Whether you're a seasoned maker or a beginner, Lusso Makerspaces provides the resources and support you need
+        to turn your visions into reality.
+    </p>
     <button onclick="showHome()">Back to Home</button>
 </main>
 
 <!-- ... (remaining sections remain unchanged) -->
 
 <script>
-    // (existing JavaScript functions remain unchanged)
+    function showHome() {
+        hideAllSections();
+        document.querySelector('.home').style.display = 'block';
+    }
+
+    function showAbout() {
+        hideAllSections();
+        document.querySelector('.about').style.display = 'block';
+    }
+
+    function showAvailableEquipment() {
+        hideAllSections();
+        document.querySelector('.equipment').style.display = 'block';
+    }
+
+    // ... (remaining JavaScript functions remain unchanged)
+
+    function hideAllSections() {
+        const sections = document.querySelectorAll('main');
+        sections.forEach(section => {
+            section.style.display = 'none';
+        });
+    }
 
     // Ensure that the "Home" section is displayed by default
     showHome();
