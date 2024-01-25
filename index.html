@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -81,7 +82,8 @@
             margin-top: 20px;
         }
 
-        th, td {
+        th,
+        td {
             border: 1px solid #ddd;
             padding: 8px;
             text-align: left;
@@ -92,73 +94,277 @@
             color: white;
         }
 
-        .home, .about, .equipment, .reservation-form, .summary, .payment-form, .thank-you {
+        .home,
+        .about,
+        .equipment,
+        .reservation-form,
+        .summary,
+        .payment-form,
+        .thank-you {
             display: none;
-        }
-
-        .home {
-            display: block;
         }
     </style>
 </head>
+
 <body>
 
-<header>
-    <h1>Lusso Makerspaces System</h1>
-</header>
+    <header>
+        <h1>Lusso Makerspaces System</h1>
+    </header>
 
-<nav>
-    <a href="#" onclick="showHome()">Home</a>
-    <a href="#" onclick="showAbout()">About</a>
-</nav>
+    <nav>
+        <a href="#" onclick="showHome()">Home</a>
+        <a href="#" onclick="showAbout()">About</a>
+    </nav>
 
-<main class="home">
-    <h2>Welcome to Lusso Makerspaces</h2>
-    <p>Explore and create in our well-equipped makerspace. Reserve your workstation or equipment today!</p>
-    <button onclick="showAvailableEquipment()">View Available Equipment</button>
-</main>
+    <main class="home" style="display: block;">
+        <h2>Welcome to Lusso Makerspaces</h2>
+        <p>Explore and create in our well-equipped makerspace. Reserve your workstation or equipment today!</p>
+        <button onclick="showAvailableEquipment()">View Available Equipment</button>
+    </main>
 
-<main class="about">
-    <h2>About Lusso Makerspaces</h2>
-    <p>
-        Lusso Makerspaces is a creative hub where individuals can unleash their imagination and bring their ideas to life.
-        Our makerspace is equipped with cutting-edge tools and equipment for 3D printing, woodworking, and electronics.
-        Whether you're a seasoned maker or a beginner, Lusso Makerspaces provides the resources and support you need
-        to turn your visions into reality.
-    </p>
-    <button onclick="showHome()">Back to Home</button>
-</main>
+    <main class="about">
+        <h2>About Lusso Makerspaces</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor...</p>
+        <button onclick="showHome()">Back to Home</button>
+    </main>
 
-<!-- ... (remaining sections remain unchanged) -->
+    <main class="equipment">
+        <h2>Available Equipment</h2>
 
-<script>
-    function showHome() {
-        hideAllSections();
-        document.querySelector('.home').style.display = 'block';
-    }
+        <table>
+            <thead>
+                <tr>
+                    <th>Equipment</th>
+                    <th>Hourly Rate</th>
+                    <th>Reserve</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>3D Printer</td>
+                    <td>$20</td>
+                    <td><button onclick="selectEquipment('3D Printer', 20)">Reserve</button></td>
+                </tr>
+                <tr>
+                    <td>Woodworking Station</td>
+                    <td>$25</td>
+                    <td><button onclick="selectEquipment('Woodworking Station', 25)">Reserve</button></td>
+                </tr>
+                <tr>
+                    <td>Electronics Lab</td>
+                    <td>$30</td>
+                    <td><button onclick="selectEquipment('Electronics Lab', 30)">Reserve</button></td>
+                </tr>
+            </tbody>
+        </table>
 
-    function showAbout() {
-        hideAllSections();
-        document.querySelector('.about').style.display = 'block';
-    }
+        <button onclick="backToHome()">Back to Home</button>
+    </main>
 
-    function showAvailableEquipment() {
-        hideAllSections();
-        document.querySelector('.equipment').style.display = 'block';
-    }
+    <main class="reservation-form">
+        <h2>Reservation Form</h2>
 
-    // ... (remaining JavaScript functions remain unchanged)
+        <form id="reservationForm">
+            <label for="userName">Your Name:</label>
+            <input type="text" id="userName" required>
 
-    function hideAllSections() {
-        const sections = document.querySelectorAll('main');
-        sections.forEach(section => {
-            section.style.display = 'none';
-        });
-    }
+            <label for="reservationDate">Reservation Date:</label>
+            <input type="date" id="reservationDate" required>
 
-    // Ensure that the "Home" section is displayed by default
-    showHome();
-</script>
+            <label for="reservationHours">Number of Hours:</label>
+            <input type="number" id="reservationHours" required disabled>
+
+            <button type="button" onclick="submitReservation()">Submit Reservation</button>
+        </form>
+
+        <button onclick="backToEquipment()">Back to Equipment</button>
+    </main>
+
+    <main class="summary">
+        <h2>Reservation Summary</h2>
+
+        <table>
+            <tbody>
+                <tr>
+                    <td>Equipment:</td>
+                    <td id="summaryEquipment"></td>
+                </tr>
+                <tr>
+                    <td>Hourly Rate:</td>
+                    <td id="summaryHourlyRate"></td>
+                </tr>
+                <tr>
+                    <td>User Name:</td>
+                    <td id="summaryUserName"></td>
+                </tr>
+                <tr>
+                    <td>Reservation Date:</td>
+                    <td id="summaryReservationDate"></td>
+                </tr>
+                <tr>
+                    <td>Total Cost:</td>
+                    <td id="summaryTotalCost"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <button type="button" onclick="proceedToPayment()">Proceed to Payment</button>
+    </main>
+
+    <main class="payment-form">
+        <h2>Payment</h2>
+
+        <p>Enter your credit card information to complete the reservation.</p>
+
+        <label for="cardNumber">Credit Card Number:</label>
+        <input type="text" id="cardNumber" placeholder="Enter your card number" required>
+
+        <button type="button" onclick="backToSummary()">Back to Summary</button>
+        <button type="button" onclick="processPayment()">Process Payment</button>
+    </main>
+
+    <main class="thank-you">
+        <h2>Thank You for Your Reservation!</h2>
+
+        <p>Your reservation details:</p>
+
+        <table>
+            <tbody>
+                <tr>
+                    <td>Equipment:</td>
+                    <td id="thankYouEquipment"></td>
+                </tr>
+                <tr>
+                    <td>Hourly Rate:</td>
+                    <td id="thankYouHourlyRate"></td>
+                </tr>
+                <tr>
+                    <td>User Name:</td>
+                    <td id="thankYouUserName"></td>
+                </tr>
+                <tr>
+                    <td>Reservation Date:</td>
+                    <td id="thankYouReservationDate"></td>
+                </tr>
+                <tr>
+                    <td>Total Cost:</td>
+                    <td id="thankYouTotalCost"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>We look forward to seeing your creative projects!</p>
+        <button type="button" onclick="continueToHome()">Continue</button>
+    </main>
+
+    <script>
+        let selectedEquipment = '';
+
+        function showHome() {
+            hideAllSections();
+            document.querySelector('.home').style.display = 'block';
+        }
+
+        function showAbout() {
+            hideAllSections();
+            document.querySelector('.about').style.display = 'block';
+        }
+
+        function showAvailableEquipment() {
+            hideAllSections();
+            document.querySelector('.equipment').style.display = 'block';
+        }
+
+        function selectEquipment(equipmentName, hourlyRate) {
+            selectedEquipment = equipmentName;
+
+            // Enable the reservation hours input
+            document.getElementById("reservationHours").removeAttribute("disabled");
+
+            // Set hourly rate in the form
+            document.getElementById("reservationHours").setAttribute("data-hourly-rate", hourlyRate);
+
+            // Display the reservation form
+            document.getElementById("reservationForm").reset(); // Clear the form
+            document.querySelector('.equipment').style.display = "none";
+            document.querySelector('.reservation-form').style.display = "block";
+        }
+
+        function backToHome() {
+            hideAllSections();
+            document.querySelector('.home').style.display = 'block';
+        }
+
+        function backToEquipment() {
+            hideAllSections();
+            document.querySelector('.equipment').style.display = 'block';
+        }
+
+        function backToSummary() {
+            hideAllSections();
+            document.querySelector('.summary').style.display = "block";
+        }
+
+        function submitReservation() {
+            // Handle the reservation details
+            const userName = document.getElementById('userName').value;
+            const reservationDate = document.getElementById('reservationDate').value;
+            const reservationHours = parseInt(document.getElementById('reservationHours').value, 10);
+            const hourlyRate = parseInt(document.getElementById('reservationHours').getAttribute('data-hourly-rate'), 10);
+
+            // Display the summary
+            document.getElementById("summaryEquipment").innerText = selectedEquipment;
+            document.getElementById("summaryHourlyRate").innerText = `$${hourlyRate}`;
+            document.getElementById("summaryUserName").innerText = userName;
+            document.getElementById("summaryReservationDate").innerText = reservationDate;
+            document.getElementById("summaryTotalCost").innerText = `$${calculateTotalCost(hourlyRate, reservationHours)}`;
+
+            hideAllSections();
+            document.querySelector('.summary').style.display = "block";
+        }
+
+        function proceedToPayment() {
+            hideAllSections();
+            document.querySelector('.payment-form').style.display = "block";
+        }
+
+        function processPayment() {
+            const cardNumber = document.getElementById('cardNumber').value;
+
+            // Simulate payment processing (replace with actual payment processing code)
+            if (cardNumber) {
+                // Display the detailed Thank You page
+                document.getElementById("thankYouEquipment").innerText = selectedEquipment;
+                document.getElementById("thankYouHourlyRate").innerText = `$${document.getElementById('summaryHourlyRate').innerText}`;
+                document.getElementById("thankYouUserName").innerText = document.getElementById('summaryUserName').innerText;
+                document.getElementById("thankYouReservationDate").innerText = document.getElementById('summaryReservationDate').innerText;
+                document.getElementById("thankYouTotalCost").innerText = `$${document.getElementById('summaryTotalCost').innerText}`;
+
+                hideAllSections();
+                document.querySelector('.thank-you').style.display = "block";
+            } else {
+                alert("Please enter a valid credit card number.");
+            }
+        }
+
+        function continueToHome() {
+            hideAllSections();
+            document.querySelector('.home').style.display = 'block';
+        }
+
+        function hideAllSections() {
+            const sections = document.querySelectorAll('main');
+            sections.forEach(section => {
+                section.style.display = 'none';
+            });
+        }
+
+        function calculateTotalCost(hourlyRate, reservationHours) {
+            return hourlyRate * reservationHours;
+        }
+    </script>
 
 </body>
+
 </html>
