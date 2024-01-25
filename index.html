@@ -100,7 +100,8 @@
         .reservation-form,
         .summary,
         .payment-form,
-        .thank-you {
+        .thank-you,
+        .code-explanation {
             display: none;
         }
     </style>
@@ -114,7 +115,8 @@
 
     <nav>
         <a href="#" onclick="showHome()">Home</a>
-        <a href="#" onclick="showAbout()">About Us</a>
+        <a href="#" onclick="showAbout()">About</a>
+        <a href="#" onclick="showCodeExplanation()">How Code Works</a>
     </nav>
 
     <main class="home" style="display: block;">
@@ -125,10 +127,7 @@
 
     <main class="about">
         <h2>About Lusso Makerspaces</h2>
-    <p>Welcome to Lusso Makerspaces, where creativity knows no bounds! Our makerspace is a haven for innovators, tinkerers, and visionaries. Here, we provide the tools and environment for you to turn your ideas into reality.</p>
-    <p>At Lusso Makerspaces, we believe in the power of hands-on creation. Whether you're into 3D printing, woodworking, or electronics, our well-equipped facilities are designed to meet your needs. Our mission is to inspire and empower individuals to explore, experiment, and bring their projects to life.</p>
-    <p>Our dedicated team is passionate about fostering a community of makers. We offer workshops, events, and collaborative spaces to encourage knowledge sharing and collaboration. No matter your skill level, you'll find a supportive community ready to help you on your creative journey.</p>
-    <p>Join us at Lusso Makerspaces and unlock your creative potential. Experience the joy of making and discover a community that shares your passion for innovation. Let's build, create, and make extraordinary things together!</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor...</p>
         <button onclick="showHome()">Back to Home</button>
     </main>
 
@@ -261,6 +260,13 @@
         <button type="button" onclick="continueToHome()">Continue</button>
     </main>
 
+    <main class="code-explanation">
+        <h2>How Our Website Code Works</h2>
+        <p>The website is built using HTML, CSS, and JavaScript. The navigation is handled by JavaScript functions that show and hide different sections of the page based on user interactions. The reservation process involves selecting equipment, providing user details, reviewing the reservation, entering payment information, and receiving a thank-you message. The code is designed to be user-friendly and responsive, providing a seamless experience for makerspace enthusiasts.</p>
+        <p> How our code works:</p>
+        <button onclick="showHome()">Back to Home</button>
+    </main>
+
     <script>
         let selectedEquipment = '';
 
@@ -277,6 +283,11 @@
         function showAvailableEquipment() {
             hideAllSections();
             document.querySelector('.equipment').style.display = 'block';
+        }
+
+        function showCodeExplanation() {
+            hideAllSections();
+            document.querySelector('.code-explanation').style.display = 'block';
         }
 
         function selectEquipment(equipmentName, hourlyRate) {
