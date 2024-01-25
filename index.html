@@ -5,7 +5,97 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hotel Reservation System</title>
     <style>
-        /* Your existing CSS styles remain unchanged */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin: 10px 0;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        button.reserved {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .home {
+            display: block;
+        }
+
+        .rooms {
+            display: none;
+        }
+
+        .reservation-form {
+            display: none;
+        }
+
+        .summary {
+            display: none;
+        }
+
+        .payment-form {
+            display: none;
+        }
+
+        .thank-you {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -18,58 +108,217 @@
     <h2>Welcome to Our Hotel</h2>
     <p>Experience comfort and luxury in our premium rooms. Reserve your stay today!</p>
     <button onclick="showAvailableRooms()">View Available Rooms</button>
-    <button onclick="showMembershipForm()">Sign Up for Membership</button>
 </main>
 
 <main class="rooms">
-    <!-- Your existing available rooms section -->
+    <h2>Available Rooms</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Room</th>
+                <th>Price</th>
+                <th>Reserve</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Single Room</td>
+                <td>$100</td>
+                <td><button onclick="selectRoom('Single Room', 100)">Reserve</button></td>
+            </tr>
+            <tr>
+                <td>Double Room</td>
+                <td>$150</td>
+                <td><button onclick="selectRoom('Double Room', 150)">Reserve</button></td>
+            </tr>
+            <tr>
+                <td>Suite</td>
+                <td>$200</td>
+                <td><button onclick="selectRoom('Suite', 200)">Reserve</button></td>
+            </tr>
+        </tbody>
+    </table>
 </main>
 
 <main class="reservation-form">
-    <!-- Your existing reservation form section -->
-</main>
+    <h2>Reservation Form</h2>
 
-<main class="membership-form">
-    <h2>Membership Signup</h2>
+    <form id="reservationForm">
+        <label for="guestName">Your Name:</label>
+        <input type="text" id="guestName" required>
 
-    <form id="membershipForm">
-        <label for="memberName">Your Name:</label>
-        <input type="text" id="memberName" required>
+        <label for="checkInDate">Check-in Date:</label>
+        <input type="date" id="checkInDate" required>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" required>
+        <label for="checkOutDate">Check-out Date:</label>
+        <input type="date" id="checkOutDate" required>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" required>
-
-        <button type="button" onclick="submitMembership()">Sign Up</button>
+        <button type="button" onclick="submitReservation()">Submit Reservation</button>
     </form>
 </main>
 
 <main class="summary">
-    <!-- Your existing reservation summary section -->
+    <h2>Reservation Summary</h2>
+
+    <table>
+        <tbody>
+            <tr>
+                <td>Room:</td>
+                <td id="summaryRoom"></td>
+            </tr>
+            <tr>
+                <td>Price:</td>
+                <td id="summaryPrice"></td>
+            </tr>
+            <tr>
+                <td>Guest Name:</td>
+                <td id="summaryGuestName"></td>
+            </tr>
+            <tr>
+                <td>Check-in Date:</td>
+                <td id="summaryCheckInDate"></td>
+            </tr>
+            <tr>
+                <td>Check-out Date:</td>
+                <td id="summaryCheckOutDate"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button type="button" onclick="proceedToPayment()">Proceed to Payment</button>
 </main>
 
 <main class="payment-form">
-    <!-- Your existing payment form section -->
+    <h2>Payment</h2>
+
+    <p>Enter your credit card information to complete the reservation.</p>
+
+    <label for="cardNumber">Credit Card Number:</label>
+    <input type="text" id="cardNumber" placeholder="Enter your card number" required>
+
+    <button type="button" onclick="processPayment()">Process Payment</button>
 </main>
 
 <main class="thank-you">
-    <!-- Your existing thank-you section -->
+    <h2>Thank You for Your Reservation!</h2>
+
+    <p>Your reservation details:</p>
+
+    <table>
+        <tbody>
+            <tr>
+                <td>Room:</td>
+                <td id="thankYouRoom"></td>
+            </tr>
+            <tr>
+                <td>Price:</td>
+                <td id="thankYouPrice"></td>
+            </tr>
+            <tr>
+                <td>Guest Name:</td>
+                <td id="thankYouGuestName"></td>
+            </tr>
+            <tr>
+                <td>Check-in Date:</td>
+                <td id="thankYouCheckInDate"></td>
+            </tr>
+            <tr>
+                <td>Check-out Date:</td>
+                <td id="thankYouCheckOutDate"></td>
+            </tr>
+            <tr>
+                <td>Room Number:</td>
+                <td id="roomNumber"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p>We look forward to welcoming you!</p>
+    <button type="button" onclick="continueToHome()">Continue</button>
 </main>
 
 <script>
-    // Your existing JavaScript code remains unchanged
+    let selectedRoom = '';
 
-    // New function to show the membership form
-    function showMembershipForm() {
+    function showAvailableRooms() {
         document.querySelector('.home').style.display = 'none';
-        document.querySelector('.rooms').style.display = 'none';
-        document.querySelector('.reservation-form').style.display = 'none';
-        document.querySelector('.summary').style.display = 'none';
-        document.querySelector('.payment-form').style.display = 'none';
-        document.querySelector('.thank-you').style.display = 'none';
-        document.querySelector('.membership-form').style.display = 'block';
+        document.querySelector('.rooms').style.display = 'block';
+    }
+
+    function selectRoom(roomName, price) {
+        selectedRoom = roomName;
+
+        // Display the reservation form
+        document.getElementById("reservationForm").reset(); // Clear the form
+        document.querySelector('.rooms').style.display = "none";
+        document.querySelector('.reservation-form').style.display = "block";
+    }
+
+    function submitReservation() {
+        // Handle the reservation details
+        const guestName = document.getElementById('guestName').value;
+        const checkInDate = document.getElementById('checkInDate').value;
+        const checkOutDate = document.getElementById('checkOutDate').value;
+
+        // Display the summary
+        document.getElementById("summaryRoom").innerText = selectedRoom;
+        document.getElementById("summaryPrice").innerText = `$${getRoomPrice(selectedRoom)}`;
+        document.getElementById("summaryGuestName").innerText = guestName;
+        document.getElementById("summaryCheckInDate").innerText = checkInDate;
+        document.getElementById("summaryCheckOutDate").innerText = checkOutDate;
+
+        document.querySelector('.reservation-form').style.display = "none";
+        document.querySelector('.summary').style.display = "block";
+    }
+
+    function proceedToPayment() {
+        document.querySelector('.summary').style.display = "none";
+        document.querySelector('.payment-form').style.display = "block";
+    }
+
+    function processPayment() {
+        const cardNumber = document.getElementById('cardNumber').value;
+
+        // Simulate payment processing (replace with actual payment processing code)
+        if (cardNumber) {
+            // Display the detailed Thank You page
+            document.getElementById("thankYouRoom").innerText = selectedRoom;
+            document.getElementById("thankYouPrice").innerText = `$${getRoomPrice(selectedRoom)}`;
+            document.getElementById("thankYouGuestName").innerText = document.getElementById('summaryGuestName').innerText;
+            document.getElementById("thankYouCheckInDate").innerText = document.getElementById('summaryCheckInDate').innerText;
+            document.getElementById("thankYouCheckOutDate").innerText = document.getElementById('summaryCheckOutDate').innerText;
+            document.getElementById("roomNumber").innerText = generateRoomNumber();
+
+            document.querySelector('.payment-form').style.display = "none";
+            document.querySelector('.thank-you').style.display = "block";
+        } else {
+            alert("Please enter a valid credit card number.");
+        }
+    }
+
+    function continueToHome() {
+        document.querySelector('.thank-you').style.display = "none";
+        document.querySelector('.home').style.display = 'block';
+    }
+
+    function getRoomPrice(roomName) {
+        // You can replace this with a dynamic price lookup based on the room name
+        switch (roomName) {
+            case 'Single Room':
+                return 100;
+            case 'Double Room':
+                return 150;
+            case 'Suite':
+                return 200;
+            default:
+                return 0;
+        }
+    }
+
+    function generateRoomNumber() {
+        // Generate a random room number (replace this with a more robust method)
+        return Math.floor(Math.random() * 1000) + 1;
     }
 </script>
 
