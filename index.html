@@ -118,20 +118,19 @@
     <nav>
         <a href="#" onclick="showHome()">Home</a>
         <a href="#" onclick="showAbout()">About</a>
-        <a href="#" onclick="showAvailableEquipment()">Choose Membership</a>
+        <a href="#" onclick="showCodeExplanation()">ANOUNCEMENTS</a>
         <a href="#" onclick="showMemberList()">Member List</a>
-        <a href="#" onclick="showCodeExplanation()">Announcements</a>
     </nav>
 
     <main class="home" style="display: block;">
         <h2> LITTLE JHON JHON</h2>
-        <p> If you got any questions, go ask any of us but not Amit.</p>
+        <p> if you got any questions go ask any of us but not Amit </p>
         <button onclick="showAvailableEquipment()">Come join us</button>
     </main>
 
     <main class="about">
         <h2>About Us</h2>
-        <p>The co-founder of this website is Adam Mcge. The co-founder is Marwan Mohamed, and if you got any questions, go ask any of us but not Amit.</p>
+        <p>The co-founder of this website is Adam Mcge. The co-founder is Marwan Mohamed, and if you got any questions, go ask any of us but not Amit </p>
         <button onclick="showHome()">Back to Home</button>
     </main>
 
@@ -178,20 +177,13 @@
             <label for="membershipType">Membership Type:</label>
             <input type="text" id="membershipType" required disabled>
 
+            <label for="submissionDate">Submission Date:</label>
+            <input type="date" id="submissionDate" required>
+
             <button type="button" onclick="submitMembership()">Submit Membership</button>
         </form>
 
         <button onclick="backToEquipment()">Back to Memberships</button>
-    </main>
-
-    <main class="member-list">
-        <h2>Member List</h2>
-
-        <table id="memberListTable">
-            <!-- Member list will be displayed here -->
-        </table>
-
-        <button onclick="showHome()">Back to Home</button>
     </main>
 
     <main class="code-explanation">
@@ -200,8 +192,14 @@
         <button onclick="showHome()">Back to Home</button>
     </main>
 
+    <main class="member-list">
+        <h2>Member List</h2>
+        <ul id="memberList"></ul>
+        <button onclick="showHome()">Back to Home</button>
+    </main>
+
     <script>
-        let members = [];
+        let selectedMembership = '';
 
         function showHome() {
             hideAllSections();
@@ -225,61 +223,81 @@
 
         function showMemberList() {
             hideAllSections();
-            document.querySelector('.member-list').style.display = 'block';
-
-            // Display the list of members
             displayMemberList();
-        }
-
-        function selectMembership(membershipType, hourlyRate) {
-            const userName = prompt("Please enter your name:");
-            const submissionDate = prompt("Please enter the submission date (MM/DD/YYYY):");
-
-            if (userName && submissionDate) {
-                const newMember = {
-                    name: userName,
-                    membershipType: membershipType,
-                    submissionDate: submissionDate,
-                };
-
-                members.push(newMember);
-
-                alert(`Thank you, ${userName}, for joining as a ${membershipType} member!`);
-
-                // Clear the membership form
-                document.getElementById("membershipForm").reset();
-
-                // Show the home section
-                showHome();
-            } else {
-                alert("Please provide your name and submission date.");
-            }
+            document.querySelector('.member-list').style.display = 'block';
         }
 
         function displayMemberList() {
-            const memberListTable = document.getElementById('memberListTable');
-            // Remove existing rows
-            memberListTable.querySelectorAll('tr:not(.header)').forEach(row => row.remove());
+            const memberListContainer = document.getElementById('memberList');
+            memberListContainer.innerHTML = '';
 
-            // Add header row
-            const headerRow = memberListTable.insertRow();
-            const nameHeader = headerRow.insertCell(0);
-            const typeHeader = headerRow.insertCell(1);
-            const dateHeader = headerRow.insertCell(2);
-            nameHeader.innerHTML = "<b>Name</b>";
-            typeHeader.innerHTML = "<b>Membership Type</b>";
-            dateHeader.innerHTML = "<b>Submission Date</b>";
+            // Retrieve member information from local storage
+            const members = JSON.parse(localStorage.getItem('members')) || [];
 
-            // Add member rows
+            // Display member names
             members.forEach(member => {
-                const row = memberListTable.insertRow();
-                const nameCell = row.insertCell(0);
-                const typeCell = row.insertCell(1);
-                const dateCell = row.insertCell(2);
-                nameCell.innerText = member.name;
-                typeCell.innerText = member.membershipType;
-                dateCell.innerText = member.submissionDate;
+                const listItem = document.createElement('li');
+                listItem.textContent = `${member.name} - ${member.membershipType} (Joined on ${member.submissionDate})`;
+                memberListContainer.appendChild(listItem);
             });
+        }
+
+        function selectMembership(membershipType, hourlyRate) {
+            selectedMembership = membershipType;
+
+            // Enable the membership type input
+            document.getElementById("membershipType").value = membershipType;
+
+            // Display the membership form
+            document.getElementById("membershipForm").reset(); // Clear the form
+            document.querySelector('.equipment').style.display = "none";
+            document.querySelector('.membership-form').style.display = "block";
+        }
+
+        function backToHome() {
+            hideAllSections();
+            document.querySelector('.home').style.display = 'block';
+        }
+
+        function backToEquipment() {
+            hideAllSections();
+            document.querySelector('.equipment').style.display = 'block';
+        }
+
+        function submitMembership() {
+            // Handle the membership details
+            const userName = document.getElementById('userName').value;
+            const submissionDate = document.getElementById('submissionDate').value;
+
+            // Save member information to local storage
+            const members = JSON.parse(localStorage.getItem('members')) || [];
+            members.push({
+                name: userName,
+                membershipType: selectedMembership,
+                submissionDate: submissionDate
+            });
+            localStorage.setItem('members', JSON.stringify(members));
+
+            // Display the member list
+            showMemberList();
+        }
+
+        function proceedToPayment() {
+            hideAllSections();
+            document.querySelector('.payment-form').style.display = "block";
+        }
+
+        function processPayment() {
+            // Simulate payment processing (replace with actual payment processing code)
+            alert("Payment processed successfully!");
+
+            // Continue to thank you page
+            continueToThankYou();
+        }
+
+        function continueToThankYou() {
+            hideAllSections();
+            document.querySelector('.thank-you').style.display = 'block';
         }
 
         function hideAllSections() {
