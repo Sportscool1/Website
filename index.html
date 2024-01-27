@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LITTLE JHON JHON GANG Powered by SPEEDCUBER</title>
+    <title>LITTLE JHON JHON GANG Powered by Nexat AI</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -97,11 +97,13 @@
         .home,
         .about,
         .equipment,
-        .membership-form,
+        .reservation-form,
         .summary,
         .payment-form,
         .thank-you,
-        .code-explanation {
+        .code-explanation,
+        .membership-form,
+        .member-list {
             display: none;
         }
     </style>
@@ -116,18 +118,20 @@
     <nav>
         <a href="#" onclick="showHome()">Home</a>
         <a href="#" onclick="showAbout()">About</a>
-        <a href="#" onclick="showCodeExplanation()">ANOUNCEMENTS</a>
+        <a href="#" onclick="showAvailableEquipment()">Choose Membership</a>
+        <a href="#" onclick="showMemberList()">Member List</a>
+        <a href="#" onclick="showCodeExplanation()">Announcements</a>
     </nav>
 
     <main class="home" style="display: block;">
-        <h2> LITTLE JHON JHON POWERED BY SPEEDCUBER</h2>
-        <p> if you got any questions go ask any of us but not Amit </p>
-        <button onclick="showAvailableMembership()">Choose Your Membership</button>
+        <h2> LITTLE JHON JHON</h2>
+        <p> If you got any questions, go ask any of us but not Amit.</p>
+        <button onclick="showAvailableEquipment()">Come join us</button>
     </main>
 
     <main class="about">
         <h2>About Us</h2>
-        <p>The co-founder of this website is Adam Mcge. The co-founder is Marwan Mohamed, and if you got any questions, go ask any of us but not Amit </p>
+        <p>The co-founder of this website is Adam Mcge. The co-founder is Marwan Mohamed, and if you got any questions, go ask any of us but not Amit.</p>
         <button onclick="showHome()">Back to Home</button>
     </main>
 
@@ -174,74 +178,20 @@
             <label for="membershipType">Membership Type:</label>
             <input type="text" id="membershipType" required disabled>
 
-            <label for="submissionDate">Date of Submission:</label>
-            <input type="date" id="submissionDate" required>
-
             <button type="button" onclick="submitMembership()">Submit Membership</button>
         </form>
 
         <button onclick="backToEquipment()">Back to Memberships</button>
     </main>
 
-    <main class="summary">
-        <h2>Membership Summary</h2>
+    <main class="member-list">
+        <h2>Member List</h2>
 
-        <table>
-            <tbody>
-                <tr>
-                    <td>Membership Type:</td>
-                    <td id="summaryMembershipType"></td>
-                </tr>
-                <tr>
-                    <td>User Name:</td>
-                    <td id="summaryUserName"></td>
-                </tr>
-                <tr>
-                    <td>Date of Submission:</td>
-                    <td id="summarySubmissionDate"></td>
-                </tr>
-            </tbody>
+        <table id="memberListTable">
+            <!-- Member list will be displayed here -->
         </table>
 
-        <button type="button" onclick="proceedToPayment()">Proceed to Payment</button>
-    </main>
-
-    <main class="payment-form">
-        <h2>Payment</h2>
-
-        <p>Enter your credit card information to complete the submission.</p>
-
-        <label for="cardNumber">Credit Card Number:</label>
-        <input type="text" id="cardNumber" placeholder="Enter your card number" required>
-
-        <button type="button" onclick="backToSummary()">Back to Summary</button>
-        <button type="button" onclick="processPayment()">Process Payment</button>
-    </main>
-
-    <main class="thank-you">
-        <h2>Thank You for Your Submission!</h2>
-
-        <p>Your submission details:</p>
-
-        <table>
-            <tbody>
-                <tr>
-                    <td>Membership Type:</td>
-                    <td id="thankYouMembershipType"></td>
-                </tr>
-                <tr>
-                    <td>User Name:</td>
-                    <td id="thankYouUserName"></td>
-                </tr>
-                <tr>
-                    <td>Date of Submission:</td>
-                    <td id="thankYouSubmissionDate"></td>
-                </tr>
-            </tbody>
-        </table>
-
-        <p>We look forward to having you as a member!</p>
-        <button type="button" onclick="continueToHome()">Continue</button>
+        <button onclick="showHome()">Back to Home</button>
     </main>
 
     <main class="code-explanation">
@@ -251,7 +201,7 @@
     </main>
 
     <script>
-        let selectedMembership = '';
+        let members = [];
 
         function showHome() {
             hideAllSections();
@@ -263,7 +213,7 @@
             document.querySelector('.about').style.display = 'block';
         }
 
-        function showAvailableMembership() {
+        function showAvailableEquipment() {
             hideAllSections();
             document.querySelector('.equipment').style.display = 'block';
         }
@@ -273,72 +223,63 @@
             document.querySelector('.code-explanation').style.display = 'block';
         }
 
+        function showMemberList() {
+            hideAllSections();
+            document.querySelector('.member-list').style.display = 'block';
+
+            // Display the list of members
+            displayMemberList();
+        }
+
         function selectMembership(membershipType, hourlyRate) {
-            selectedMembership = membershipType;
+            const userName = prompt("Please enter your name:");
+            const submissionDate = prompt("Please enter the submission date (MM/DD/YYYY):");
 
-            // Enable the membership type input
-            document.getElementById("membershipType").value = membershipType;
+            if (userName && submissionDate) {
+                const newMember = {
+                    name: userName,
+                    membershipType: membershipType,
+                    submissionDate: submissionDate,
+                };
 
-            // Display the membership form
-            document.getElementById("membershipForm").reset(); // Clear the form
-            document.querySelector('.equipment').style.display = "none";
-            document.querySelector('.membership-form').style.display = "block";
-        }
+                members.push(newMember);
 
-        function backToHome() {
-            hideAllSections();
-            document.querySelector('.home').style.display = 'block';
-        }
+                alert(`Thank you, ${userName}, for joining as a ${membershipType} member!`);
 
-        function backToEquipment() {
-            hideAllSections();
-            document.querySelector('.equipment').style.display = 'block';
-        }
+                // Clear the membership form
+                document.getElementById("membershipForm").reset();
 
-        function submitMembership() {
-            // Handle the membership details
-            const userName = document.getElementById('userName').value;
-            const submissionDate = document.getElementById('submissionDate').value;
-
-            // Display the summary
-            document.getElementById("summaryMembershipType").innerText = selectedMembership;
-            document.getElementById("summaryUserName").innerText = userName;
-            document.getElementById("summarySubmissionDate").innerText = submissionDate;
-
-            hideAllSections();
-            document.querySelector('.summary').style.display = "block";
-        }
-
-        function proceedToPayment() {
-            hideAllSections();
-            document.querySelector('.payment-form').style.display = "block";
-        }
-
-        function processPayment() {
-            const cardNumber = document.getElementById('cardNumber').value;
-
-            // Simulate payment processing (replace with actual payment processing code)
-            if (cardNumber) {
-                // Display the detailed Thank You page
-                document.getElementById("thankYouMembershipType").innerText = selectedMembership;
-                document.getElementById("thankYouUserName").innerText = document.getElementById('summaryUserName').innerText;
-                document.getElementById("thankYouSubmissionDate").innerText = document.getElementById('summarySubmissionDate').innerText;
-
-                hideAllSections();
-                document.querySelector('.thank-you').style.display = "block";
+                // Show the home section
+                showHome();
             } else {
-                alert("Please enter a valid credit card number.");
+                alert("Please provide your name and submission date.");
             }
         }
 
-        function continueToHome() {
-            hideAllSections();
-            document.querySelector('.home').style.display = 'block';
-        }
+        function displayMemberList() {
+            const memberListTable = document.getElementById('memberListTable');
+            // Remove existing rows
+            memberListTable.querySelectorAll('tr:not(.header)').forEach(row => row.remove());
 
-        function backToSummary() {
-            hideAllSections();
-            document.querySelector('.summary').style.display = "block";
+            // Add header row
+            const headerRow = memberListTable.insertRow();
+            const nameHeader = headerRow.insertCell(0);
+            const typeHeader = headerRow.insertCell(1);
+            const dateHeader = headerRow.insertCell(2);
+            nameHeader.innerHTML = "<b>Name</b>";
+            typeHeader.innerHTML = "<b>Membership Type</b>";
+            dateHeader.innerHTML = "<b>Submission Date</b>";
+
+            // Add member rows
+            members.forEach(member => {
+                const row = memberListTable.insertRow();
+                const nameCell = row.insertCell(0);
+                const typeCell = row.insertCell(1);
+                const dateCell = row.insertCell(2);
+                nameCell.innerText = member.name;
+                typeCell.innerText = member.membershipType;
+                dateCell.innerText = member.submissionDate;
+            });
         }
 
         function hideAllSections() {
