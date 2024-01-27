@@ -97,7 +97,7 @@
         .home,
         .about,
         .equipment,
-        .reservation-form,
+        .membership-form,
         .summary,
         .payment-form,
         .thank-you,
@@ -116,49 +116,47 @@
     <nav>
         <a href="#" onclick="showHome()">Home</a>
         <a href="#" onclick="showAbout()">About</a>
-        <a href="#" onclick="showCodeExplanation()">ANOUCEMENTS</a>
+        <a href="#" onclick="showCodeExplanation()">ANOUNCEMENTS</a>
     </nav>
 
     <main class="home" style="display: block;">
         <h2> LITTLE JHON JHON</h2>
         <p> if you got any questions go ask any of us but not Amit </p>
-        <button onclick="showAvailableEquipment()">Come join us</button>
+        <button onclick="showAvailableMembership()">Choose Your Membership</button>
     </main>
 
     <main class="about">
         <h2>About Us</h2>
-        <p>The co founder of this website is Adam
-Mcge . The co-founder is Marwan Mohamed and if you got any questions
-go ask any of us but not Amit </p>
+        <p>The co-founder of this website is Adam Mcge. The co-founder is Marwan Mohamed, and if you got any questions, go ask any of us but not Amit </p>
         <button onclick="showHome()">Back to Home</button>
     </main>
 
     <main class="equipment">
-        <h2>come join us</h2>
+        <h2>Choose Your Membership</h2>
 
         <table>
             <thead>
                 <tr>
-                    <th>Equipment</th>
+                    <th>Membership Type</th>
                     <th>Hourly Rate</th>
-                    <th>Reserve</th>
+                    <th>Join</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>peremium member</td>
+                    <td>Premium Member</td>
                     <td>$20</td>
-                    <td><button onclick="selectEquipment('3D Printer', 20)">Reserve</button></td>
+                    <td><button onclick="selectMembership('Premium Member', 20)">Join</button></td>
                 </tr>
                 <tr>
-                    <td>Basic member</td>
+                    <td>Basic Member</td>
                     <td>$25</td>
-                    <td><button onclick="selectEquipment('Woodworking Station', 25)">Reserve</button></td>
+                    <td><button onclick="selectMembership('Basic Member', 25)">Join</button></td>
                 </tr>
                 <tr>
-                    <td>Extream member</td>
+                    <td>Extreme Member</td>
                     <td>$30</td>
-                    <td><button onclick="selectEquipment('Electronics Lab', 30)">Reserve</button></td>
+                    <td><button onclick="selectMembership('Extreme Member', 30)">Join</button></td>
                 </tr>
             </tbody>
         </table>
@@ -166,49 +164,41 @@ go ask any of us but not Amit </p>
         <button onclick="backToHome()">Back to Home</button>
     </main>
 
-    <main class="reservation-form">
-        <h2>Reservation Form</h2>
+    <main class="membership-form">
+        <h2>Membership Form</h2>
 
-        <form id="reservationForm">
+        <form id="membershipForm">
             <label for="userName">Your Name:</label>
             <input type="text" id="userName" required>
 
-            <label for="reservationDate">Reservation Date:</label>
-            <input type="date" id="reservationDate" required>
+            <label for="membershipType">Membership Type:</label>
+            <input type="text" id="membershipType" required disabled>
 
-            <label for="reservationHours">Number of Hours:</label>
-            <input type="number" id="reservationHours" required disabled>
+            <label for="submissionDate">Date of Submission:</label>
+            <input type="date" id="submissionDate" required>
 
-            <button type="button" onclick="submitReservation()">Submit Reservation</button>
+            <button type="button" onclick="submitMembership()">Submit Membership</button>
         </form>
 
-        <button onclick="backToEquipment()">Back to plans</button>
+        <button onclick="backToEquipment()">Back to Memberships</button>
     </main>
 
     <main class="summary">
-        <h2>Reservation Summary</h2>
+        <h2>Membership Summary</h2>
 
         <table>
             <tbody>
                 <tr>
-                    <td>Equipment:</td>
-                    <td id="summaryEquipment"></td>
-                </tr>
-                <tr>
-                    <td>Hourly Rate:</td>
-                    <td id="summaryHourlyRate"></td>
+                    <td>Membership Type:</td>
+                    <td id="summaryMembershipType"></td>
                 </tr>
                 <tr>
                     <td>User Name:</td>
                     <td id="summaryUserName"></td>
                 </tr>
                 <tr>
-                    <td>Reservation Date:</td>
-                    <td id="summaryReservationDate"></td>
-                </tr>
-                <tr>
-                    <td>Total Cost:</td>
-                    <td id="summaryTotalCost"></td>
+                    <td>Date of Submission:</td>
+                    <td id="summarySubmissionDate"></td>
                 </tr>
             </tbody>
         </table>
@@ -219,7 +209,7 @@ go ask any of us but not Amit </p>
     <main class="payment-form">
         <h2>Payment</h2>
 
-        <p>Enter your credit card information to complete The submisson.</p>
+        <p>Enter your credit card information to complete the submission.</p>
 
         <label for="cardNumber">Credit Card Number:</label>
         <input type="text" id="cardNumber" placeholder="Enter your card number" required>
@@ -229,47 +219,39 @@ go ask any of us but not Amit </p>
     </main>
 
     <main class="thank-you">
-        <h2>Thank You for Your submisson!</h2>
+        <h2>Thank You for Your Submission!</h2>
 
-        <p>Your submisson details:</p>
+        <p>Your submission details:</p>
 
         <table>
             <tbody>
                 <tr>
-                    <td>Equipment:</td>
-                    <td id="thankYouEquipment"></td>
-                </tr>
-                <tr>
-                    <td>Hourly Rate:</td>
-                    <td id="thankYouHourlyRate"></td>
+                    <td>Membership Type:</td>
+                    <td id="thankYouMembershipType"></td>
                 </tr>
                 <tr>
                     <td>User Name:</td>
                     <td id="thankYouUserName"></td>
                 </tr>
                 <tr>
-                    <td> DATE OF submisson Date:</td>
-                    <td id="thankYouReservationDate"></td>
-                </tr>
-                <tr>
-                    <td>Total Cost:</td>
-                    <td id="thankYouTotalCost"></td>
+                    <td>Date of Submission:</td>
+                    <td id="thankYouSubmissionDate"></td>
                 </tr>
             </tbody>
         </table>
 
-        <p>We look forward to seeing you!</p>
+        <p>We look forward to having you as a member!</p>
         <button type="button" onclick="continueToHome()">Continue</button>
     </main>
 
     <main class="code-explanation">
-        <h2>Anouncements</h2>
-        <p> LOOKS LIKE THERE IS NO ANOUNCEMENTS SO FAR</p>
+        <h2>Announcements</h2>
+        <p>LOOKS LIKE THERE IS NO ANNOUNCEMENTS SO FAR</p>
         <button onclick="showHome()">Back to Home</button>
     </main>
 
     <script>
-        let selectedEquipment = '';
+        let selectedMembership = '';
 
         function showHome() {
             hideAllSections();
@@ -281,7 +263,7 @@ go ask any of us but not Amit </p>
             document.querySelector('.about').style.display = 'block';
         }
 
-        function showAvailableEquipment() {
+        function showAvailableMembership() {
             hideAllSections();
             document.querySelector('.equipment').style.display = 'block';
         }
@@ -291,19 +273,16 @@ go ask any of us but not Amit </p>
             document.querySelector('.code-explanation').style.display = 'block';
         }
 
-        function selectEquipment(equipmentName, hourlyRate) {
-            selectedEquipment = equipmentName;
+        function selectMembership(membershipType, hourlyRate) {
+            selectedMembership = membershipType;
 
-            // Enable the reservation hours input
-            document.getElementById("reservationHours").removeAttribute("disabled");
+            // Enable the membership type input
+            document.getElementById("membershipType").value = membershipType;
 
-            // Set hourly rate in the form
-            document.getElementById("reservationHours").setAttribute("data-hourly-rate", hourlyRate);
-
-            // Display the reservation form
-            document.getElementById("reservationForm").reset(); // Clear the form
+            // Display the membership form
+            document.getElementById("membershipForm").reset(); // Clear the form
             document.querySelector('.equipment').style.display = "none";
-            document.querySelector('.reservation-form').style.display = "block";
+            document.querySelector('.membership-form').style.display = "block";
         }
 
         function backToHome() {
@@ -316,24 +295,15 @@ go ask any of us but not Amit </p>
             document.querySelector('.equipment').style.display = 'block';
         }
 
-        function backToSummary() {
-            hideAllSections();
-            document.querySelector('.summary').style.display = "block";
-        }
-
-        function submitReservation() {
-            // Handle the reservation details
+        function submitMembership() {
+            // Handle the membership details
             const userName = document.getElementById('userName').value;
-            const reservationDate = document.getElementById('reservationDate').value;
-            const reservationHours = parseInt(document.getElementById('reservationHours').value, 10);
-            const hourlyRate = parseInt(document.getElementById('reservationHours').getAttribute('data-hourly-rate'), 10);
+            const submissionDate = document.getElementById('submissionDate').value;
 
             // Display the summary
-            document.getElementById("summaryEquipment").innerText = selectedEquipment;
-            document.getElementById("summaryHourlyRate").innerText = `$${hourlyRate}`;
+            document.getElementById("summaryMembershipType").innerText = selectedMembership;
             document.getElementById("summaryUserName").innerText = userName;
-            document.getElementById("summaryReservationDate").innerText = reservationDate;
-            document.getElementById("summaryTotalCost").innerText = `$${calculateTotalCost(hourlyRate, reservationHours)}`;
+            document.getElementById("summarySubmissionDate").innerText = submissionDate;
 
             hideAllSections();
             document.querySelector('.summary').style.display = "block";
@@ -350,11 +320,9 @@ go ask any of us but not Amit </p>
             // Simulate payment processing (replace with actual payment processing code)
             if (cardNumber) {
                 // Display the detailed Thank You page
-                document.getElementById("thankYouEquipment").innerText = selectedEquipment;
-                document.getElementById("thankYouHourlyRate").innerText = `$${document.getElementById('summaryHourlyRate').innerText}`;
+                document.getElementById("thankYouMembershipType").innerText = selectedMembership;
                 document.getElementById("thankYouUserName").innerText = document.getElementById('summaryUserName').innerText;
-                document.getElementById("thankYouReservationDate").innerText = document.getElementById('summaryReservationDate').innerText;
-                document.getElementById("thankYouTotalCost").innerText = `$${document.getElementById('summaryTotalCost').innerText}`;
+                document.getElementById("thankYouSubmissionDate").innerText = document.getElementById('summarySubmissionDate').innerText;
 
                 hideAllSections();
                 document.querySelector('.thank-you').style.display = "block";
@@ -368,15 +336,16 @@ go ask any of us but not Amit </p>
             document.querySelector('.home').style.display = 'block';
         }
 
+        function backToSummary() {
+            hideAllSections();
+            document.querySelector('.summary').style.display = "block";
+        }
+
         function hideAllSections() {
             const sections = document.querySelectorAll('main');
             sections.forEach(section => {
                 section.style.display = 'none';
             });
-        }
-
-        function calculateTotalCost(hourlyRate, reservationHours) {
-            return hourlyRate * reservationHours;
         }
     </script>
 
